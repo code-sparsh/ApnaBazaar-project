@@ -28,7 +28,7 @@ router.get("/", getAllListings)
 
 
 // get a single listing
-router.get("/:id", getListing);
+router.get("/id/:id", getListing);
 
 // get all the list items of a specific user
 

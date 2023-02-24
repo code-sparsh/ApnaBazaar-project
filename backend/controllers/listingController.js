@@ -34,7 +34,7 @@ const getListing = async (req,res) => {
     if(!mongoose.Types.ObjectId.isValid(id)) {
         return res.json(404).json({error: "No such listing"})
     }
-    const listing = await Listing.findById(id)
+    const listing = await Listing.findOne({_id: id})
 
     if(!listing) {
         return res.status(404).json({error : "No such listing"})
