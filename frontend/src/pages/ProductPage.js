@@ -2,7 +2,7 @@
 import { useParams } from "react-router-dom"
 import useListingContext from "../hooks/useListingContext"
 import ProductDetails from '../components/ProductDetails'
-import { useContext, useState } from "react"
+import { useContext, useEffect, useState } from "react"
 import useAuthContext from "../hooks/useAuthContext"
 
 const ProductPage = () => {
@@ -17,29 +17,38 @@ const ProductPage = () => {
 
     const [listing, setListing] = useState()
 
-    const fetchDetails = async () => {
+    useEffect(()=>{
+        const fetchDetails = async () => {
 
-        const response = await fetch("http://localhost:4000/listings/" + id, {
-            headers: {
-                'Authorization': 'Bearer ' + token, 
+            console.log("hello")
+
+            const response = await fetch("http://localhost:4000/api/listings/id/" + id, {
+                headers: {
+                    'Authorization': 'Bearer ' + token, 
+                }
+            })
+    
+            const json = await response.json()
+    
+            if(response.ok) {
+                setListing(json)
+                console.log(listing);
             }
-        })
-
-        const json = await response.json()
-
-        if(response.ok)
-            setListing(json)
-    }
-
-    useContext(()=>{
+    
+            if(response.ok != false) {
+                console.log(json.error)
+            }
+    
+        }
+        console.log("hey");
         fetchDetails();
     },[])
 
     // const listing = listings.find((list => list._id === id))
 
     return (
-        <div className="grid grid-cols-2">
-            <ProductDetails listing={listing}/> 
+        <div className="md:grid md:grid-cols-2">
+            {listing && <ProductDetails listing={listing}/>} 
             <div></div>
         </div>
         

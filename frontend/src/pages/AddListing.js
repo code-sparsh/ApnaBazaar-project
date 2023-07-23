@@ -1,85 +1,105 @@
-import { useState } from "react"
-import useAuthContext from "../hooks/useAuthContext"
+
+import React, { useState } from 'react';
 
 
 const AddListing = () => {
+    const [formData, setFormData] = useState({
+        title: '',
+        description: '',
+        phoneNumber: '',
+        image: null,
+    });
 
-    const [title, setTitle] = useState('')
-    const [description, setDescription] = useState('')
-    const [phone, setPhone] = useState('')
-    const [myImage, setMyImage] = useState('')
+    const handleChange = (e) => {
+        const { name, value } = e.target;
+        setFormData({
+            ...formData,
+            [name]: value,
+        });
+    };
 
-    const {user} = useAuthContext()
+    const handleImageChange = (e) => {
+        const file = e.target.files[0];
+        setFormData({
+            ...formData,
+            image: file,
+        });
+    };
 
-    const {token} = user
-
-
-    const uploadImageHandler = (e) => {
-        setMyImage(e.target.files[0])
-    }
-
-    const onSubmitHandler = async (e) => {
-
+    const handleSubmit = (e) => {
         e.preventDefault();
-
-        const formdata = new FormData();
-
-        formdata.append("myImage", myImage, myImage.name);
-        formdata.append('title', title);
-        formdata.append('description', description);
-        formdata.append('phone',phone);
-
-
-        const response = await fetch('http://localhost:4000/api/listings', {
-            method:"POST",
-            body: formdata,
-            headers: {
-                'Authorization': 'Bearer ' + token, 
-            }
-        })
-
-        const json = await response.json();
-
-        if(!response.ok)
-            console.log(json.error)
-
-
-        setTitle('')
-        setDescription('')
-        setPhone('')
-        setMyImage('')
-    }
+        // You can handle form submission here, for example, send data to the server or perform further actions
+        console.log(formData);
+    };
 
     return (
         <div>
-            <div>
-                <form onSubmit={onSubmitHandler}>
-                    <h3>Add a new Listing</h3>
-                    <label>Title: </label>
-                    <input type="text"
-                    onChange={(e) => {setTitle(e.target.value)}}
-                    value = {title}
+            <div className="text-4xl shadow pb-7 text-center m-10">New Listing</div>
+            <form onSubmit={handleSubmit} className="max-w-lg mx-auto p-4">
+                <div className="mb-4">
+                    <label htmlFor="title" className="block mb-2 font-medium text-gray-700">
+                        Title
+                    </label>
+                    <input
+                        type="text"
+                        name="title"
+                        id="title"
+                        value={formData.title}
+                        onChange={handleChange}
+                        required
+                        className="w-full px-3 py-2 border rounded-md shadow-sm focus:outline-none focus:ring focus:ring-opacity-50"
                     />
-                    <label>Description: </label>
-                    <input type="text"
-                    onChange={(e) => {setDescription(e.target.value)}}
-                    value = {description}
+                </div>
+                <div className="mb-4">
+                    <label htmlFor="description" className="block mb-2 font-medium text-gray-700">
+                        Description
+                    </label>
+                    <textarea
+                        name="description"
+                        id="description"
+                        value={formData.description}
+                        onChange={handleChange}
+                        required
+                        className="w-full px-3 py-2 border rounded-md shadow-sm focus:outline-none focus:ring focus:ring-opacity-50"
                     />
-                    <label>Phone Number: </label>
-                    <input type="number"
-                    onChange={(e) => {setPhone(e.target.value)}}
-                    value = {phone}
+                </div>
+                <div className="mb-4">
+                    <label htmlFor="phoneNumber" className="block mb-2 font-medium text-gray-700">
+                        Phone Number
+                    </label>
+                    <input
+                        type="tel"
+                        name="phoneNumber"
+                        id="phoneNumber"
+                        value={formData.phoneNumber}
+                        onChange={handleChange}
+                        required
+                        className="w-full px-3 py-2 border rounded-md shadow-sm focus:outline-none focus:ring focus:ring-opacity-50"
                     />
-                    <label>Image: </label>
-                    <input type="file"
-                    onChange={uploadImageHandler}
+                </div>
+                <div className="mb-4">
+                    <label htmlFor="image" className="block mb-2 font-medium text-gray-700">
+                        Image
+                    </label>
+                    <input
+                        type="file"
+                        accept="image/*"
+                        name="image"
+                        id="image"
+                        onChange={handleImageChange}
+                        required
+                        className="w-full px-3 py-2 border rounded-md shadow-sm focus:outline-none focus:ring focus:ring-opacity-50"
                     />
-
-                    <button className="p-3 bg-white rounded-md">Create</button>
-                </form>
-            </div>
+                </div>
+                <button
+                    type="submit"
+                    className="w-full py-2 px-4 mt-4 font-semibold text-white bg-indigo-500 rounded-md shadow-md hover:bg-indigo-600 focus:outline-none focus:ring focus:ring-opacity-50"
+                >
+                    Add Listing
+                </button>
+            </form>
         </div>
-    )
-}
+    );
+};
 
 export default AddListing;

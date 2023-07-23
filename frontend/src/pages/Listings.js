@@ -33,7 +33,7 @@ const Listings = () => {
     return (
         <div className="home">
             <div className="flex justify-center text-3xl m-10">Listings around you </div>
-            <div className="grid grid-cols-2 gap-5 max-[946px]:grid-cols-1 mx-3">
+            <div className="flex-col flex lg:grid lg:grid-cols-2 gap-5 mx-3">
                 {listings && listings.map((listing) => (
                     <ListingDetail key={listing._id} listing={listing}/>
                 ))}

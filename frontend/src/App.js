@@ -3,7 +3,7 @@ import './App.css';
 
 // pages and components
 import Home from './pages/Home';
-import Navbar from './components/Navbar2';
+import Navbar from './components/Navbar3';
 import AddListing from './pages/AddListing';
 import Login from './pages/Login';
 import Signup from './pages/Signup';
