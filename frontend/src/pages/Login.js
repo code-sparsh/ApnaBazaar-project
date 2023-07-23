@@ -43,7 +43,7 @@ export default function Login() {
 
     // console.log(email,password);
 
-    const response = await fetch('http://localhost:4000/api/user/login', {
+    const response = await fetch(process.env.REACT_APP_BACKEND_URL + '/api/user/login', {
       method: "POST",
       headers: {
         'Content-Type': 'application/json'

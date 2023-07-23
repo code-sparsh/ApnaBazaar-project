@@ -10,7 +10,7 @@ const ProductDetails = ({listing}) => {
 
     const fetchImage = async () => {
 
-        const response = await fetch("http://localhost:4000/public/images/" + listing.image)
+        const response = await fetch(process.env.REACT_APP_BACKEND_URL + "/public/images/" + listing.image)
 
         const imageBlob = await response.blob()
         const imageObjectUrl = URL.createObjectURL(imageBlob)

@@ -13,7 +13,7 @@ const Listings = () => {
     useEffect(()=> {
 
         const fetchData = async () => {
-            const response = await fetch('http://localhost:4000/api/listings', {
+            const response = await fetch(process.env.REACT_APP_BACKEND_URL + '/api/listings', {
                 headers: {
                     'Authorization': 'Bearer ' + token, 
                 }

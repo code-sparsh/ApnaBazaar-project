@@ -22,7 +22,7 @@ const ProductPage = () => {
 
             console.log("hello")
 
-            const response = await fetch("http://localhost:4000/api/listings/id/" + id, {
+            const response = await fetch(process.env.REACT_APP_BACKEND_URL + "/api/listings/id/" + id, {
                 headers: {
                     'Authorization': 'Bearer ' + token, 
                 }
